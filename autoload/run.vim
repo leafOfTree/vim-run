@@ -3,6 +3,15 @@
 " Settings {{{
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let s:run_debug = exists('g:run_debug') ? g:run_debug : 0
+"}}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" Variables {{{
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let s:name = 'vim-run'
 let s:cmd = ''
 let s:output_cmd = ''
 let s:output_win = '__output__'
@@ -15,12 +24,14 @@ let s:output_win = '__output__'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! run#Run()
   if s:cmd == ''
-    echom 'No cmd found'
+    call run#Log('No cmd supplied')
     return
+  else
+    call run#Log('cmd: '.s:cmd)
   endif
 
   let output = system(s:cmd.' '.bufname('%'))
-  if s:output_cmd != ''
+  if output == '' && s:output_cmd != ''
     let output = system(s:output_cmd)
   endif
 
@@ -59,6 +70,12 @@ function! run#Update()
     let s:output_cmd = eval(g_output_cmd)
   else
     let s:output_cmd = ''
+  endif
+endfunction
+
+function! run#Log(msg)
+  if s:run_debug
+    echom '['.s:name.'] '.a:msg
   endif
 endfunction
 """}}}
