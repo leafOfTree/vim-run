@@ -4,6 +4,8 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:run_debug = exists('g:run_debug') ? g:run_debug : 0
+let s:name = 'vim-run'
+let s:output_win = '__output__'
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -11,10 +13,8 @@ let s:run_debug = exists('g:run_debug') ? g:run_debug : 0
 " Variables {{{
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let s:name = 'vim-run'
-let s:cmd = ''
-let s:output_cmd = ''
-let s:output_win = '__output__'
+let b:cmd = ''
+let b:output_cmd = ''
 """}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -23,16 +23,16 @@ let s:output_win = '__output__'
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! run#Run()
-  if s:cmd == ''
+  if b:cmd == ''
     call run#Log('No cmd supplied')
     return
   else
-    call run#Log('cmd: '.s:cmd)
+    call run#Log('cmd: '.b:cmd)
   endif
 
-  let output = system(s:cmd.' '.bufname('%'))
-  if output == '' && s:output_cmd != ''
-    let output = system(s:output_cmd)
+  let output = system(b:cmd.' '.bufname('%'))
+  if output == '' && b:output_cmd != ''
+    let output = system(b:output_cmd)
   endif
 
   let filetype = &filetype
@@ -62,14 +62,14 @@ function! run#Update()
   let g_cmd = 'g:run_cmd_'.filetype
   let g_output_cmd = 'g:run_output_cmd_'.filetype
   if exists(g_cmd)
-    let s:cmd = eval(g_cmd)
+    let b:cmd = eval(g_cmd)
   else
-    let s:cmd = ''
+    let b:cmd = ''
   endif
   if exists(g_output_cmd)
-    let s:output_cmd = eval(g_output_cmd)
+    let b:output_cmd = eval(g_output_cmd)
   else
-    let s:output_cmd = ''
+    let b:output_cmd = ''
   endif
 endfunction
 
