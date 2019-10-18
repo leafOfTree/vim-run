@@ -23,6 +23,7 @@ let b:cmd_plus = ''
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! run#Run()
+  " Avoid hit-enter
   let save_showcmd = &showcmd
   let &showcmd = 0
   if b:cmd == ''
