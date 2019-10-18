@@ -13,7 +13,7 @@ With setting
 
 ```vim
 let g:run_cmd_c = 'clang'
-let g:run_output_cmd_c = './a.out'
+let g:run_cmd_plus_c = './a.out'
 ```
 
 Open a `tmp.c` file and Press <kbd>go</kbd> in NORMAL mode. Vim will run the file and split a window that displays output.
@@ -59,7 +59,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
     let g:run_cmd_javascript = 'node'
     ```
 
-#### `g:run_output_cmd_<filetype>`
+#### `g:run_cmd_plus_<filetype>`
 
 - description: cmd to generate output. It's optional. It's useful if previous cmd only compiles file, for example.
 - default: `''`
@@ -67,7 +67,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
     ```vim
     let g:run_cmd_c = 'clang'
-    let g:run_output_cmd_c = './a.out'
+    let g:run_cmd_plus_c = './a.out'
     ```
 
 #### `g:run_mapping`
