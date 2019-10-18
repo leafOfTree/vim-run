@@ -1,8 +1,8 @@
 # vim-run
 
 <p align="center">
-<img alt="screenshot" src="https://raw.githubusercontent.com/leafOfTree/leafOfTree.github.io/master/screenshot-run-c.png" height="300" />
-<img alt="screenshot" src="https://raw.githubusercontent.com/leafOfTree/leafOfTree.github.io/master/screenshot-run-javascript.png" height="300" />
+<img alt="screenshot" src="https://raw.githubusercontent.com/leafOfTree/leafOfTree.github.io/master/screenshot-run-c.png" width="200" />
+<img alt="screenshot" src="https://raw.githubusercontent.com/leafOfTree/leafOfTree.github.io/master/screenshot-run-javascript.png" width="176" />
 </p>
 
 Run any file and show output inside vim.
