@@ -14,7 +14,7 @@ let s:output_win = '__output__'
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let b:cmd = ''
-let b:output_cmd = ''
+let b:cmd_plus = ''
 """}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -23,6 +23,8 @@ let b:output_cmd = ''
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! run#Run()
+  let save_showcmd = &showcmd
+  let &showcmd = 0
   if b:cmd == ''
     call run#Log('No cmd supplied')
     return
@@ -32,22 +34,21 @@ function! run#Run()
 
   update
   let output = system(b:cmd.' '.bufname('%'))
-  if b:output_cmd != ''
+  if b:cmd_plus != ''
     let output = output
           \."\n----------------- Output -----------------\n"
-          \.system(b:output_cmd)
+          \.system(b:cmd_plus)
   endif
 
-  let filetype = &filetype
-
+  let &showcmd = save_showcmd
   let output_winnr = bufwinnr(s:output_win)
   if output_winnr == -1
-    execute 'split '.s:output_win
+    silent execute 'split '.s:output_win
   else
     execute output_winnr.'wincmd w'
   endif
 
-  call s:SetOutputBuffer(filetype)
+  call s:SetOutputBuffer(&filetype)
 
   " Insert the output
   call append(0, split(output, '\n'))
@@ -74,16 +75,16 @@ function! run#Update()
   let filetype = &filetype
 
   let g_cmd = 'g:run_cmd_'.filetype
-  let g_output_cmd = 'g:run_output_cmd_'.filetype
+  let g_cmd_plus = 'g:run_cmd_plus_'.filetype
   if exists(g_cmd)
     let b:cmd = eval(g_cmd)
   else
     let b:cmd = ''
   endif
-  if exists(g_output_cmd)
-    let b:output_cmd = eval(g_output_cmd)
+  if exists(g_cmd_plus)
+    let b:cmd_plus = eval(g_cmd_plus)
   else
-    let b:output_cmd = ''
+    let b:cmd_plus = ''
   endif
 endfunction
 
