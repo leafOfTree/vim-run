@@ -80,6 +80,16 @@ Please stay up to date. Feel free to open an issue or a pull request.
     let g:run_mapping = '<F5>'
     ```
 
+#### `g:run_output_focus`
+
+- description: focus output window.
+- default: `0`
+
+#### `g:run_output_scroll_bottom`
+
+- description: make output window scroll to bottom.
+- default: `0`
+
 [1]: https://github.com/VundleVim/Vundle.vim
 [2]: https://github.com/tpope/vim-pathogen
 [3]: https://github.com/junegunn/vim-plug
