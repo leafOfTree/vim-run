@@ -3,9 +3,11 @@
 " Settings {{{
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let s:run_debug = exists('g:run_debug') ? g:run_debug : 0
-let s:name = 'vim-run'
-let s:output_win = '__output__'
+let s:debug = exists('g:run_debug') ? g:run_debug : 0
+let s:output_focus = exists('g:run_output_focus') 
+      \ ? g:run_output_focus : 0
+let s:output_bottom = exists('g:run_output_bottom') 
+      \ ? g:run_output_bottom : 0
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -13,6 +15,8 @@ let s:output_win = '__output__'
 " Variables {{{
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let s:name = 'vim-run'
+let s:output_win = '__output__'
 let b:cmd = ''
 let b:cmd_plus = ''
 """}}}
@@ -50,11 +54,17 @@ function! run#Run()
 
   " Insert the output
   call append(0, split(output, '\n'))
-  normal! gg
   normal! zR
+  if s:output_bottom
+    normal! G
+  else
+    normal! gg
+  endif
 
   " Go to previous window
-  wincmd p
+  if !s:output_focus
+    wincmd p
+  endif
 endfunction
 
 function! s:SetOutputBuffer(filetype)
@@ -90,7 +100,7 @@ function! run#Update()
 endfunction
 
 function! run#Log(msg)
-  if s:run_debug
+  if s:debug
     echom '['.s:name.'] '.a:msg
   endif
 endfunction
