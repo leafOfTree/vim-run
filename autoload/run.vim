@@ -6,8 +6,8 @@
 let s:debug = exists('g:run_debug') ? g:run_debug : 0
 let s:output_focus = exists('g:run_output_focus') 
       \ ? g:run_output_focus : 0
-let s:output_bottom = exists('g:run_output_bottom') 
-      \ ? g:run_output_bottom : 0
+let s:output_scroll_bottom = exists('g:run_output_scroll_bottom') 
+      \ ? g:run_output_scroll_bottom : 0
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -55,7 +55,7 @@ function! run#Run()
   " Insert the output
   call append(0, split(output, '\n'))
   normal! zR
-  if s:output_bottom
+  if s:output_scroll_bottom
     normal! G
   else
     normal! gg
