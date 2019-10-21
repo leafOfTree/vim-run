@@ -23,25 +23,22 @@ let b:cmd_plus = ''
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! run#Run()
-  " Avoid hit-enter
-  let save_showcmd = &showcmd
-  let &showcmd = 0
   if b:cmd == ''
     call run#Log('No cmd supplied')
     return
   else
     call run#Log('cmd: '.b:cmd)
   endif
+  let filetype = &filetype
 
   update
   let output = system(b:cmd.' '.bufname('%'))
-  if b:cmd_plus != ''
+  if v:shell_error == 0 && b:cmd_plus != ''
     let output = output
-          \."\n----------------- Output -----------------\n"
+          \."\n-------------------------------------------------------------------\n"
           \.system(b:cmd_plus)
   endif
 
-  let &showcmd = save_showcmd
   let output_winnr = bufwinnr(s:output_win)
   if output_winnr == -1
     silent execute 'split '.s:output_win
@@ -49,12 +46,15 @@ function! run#Run()
     execute output_winnr.'wincmd w'
   endif
 
-  call s:SetOutputBuffer(&filetype)
+  call s:SetOutputBuffer(filetype)
 
   " Insert the output
   call append(0, split(output, '\n'))
   normal! gg
   normal! zR
+
+  " Go to previous window
+  wincmd p
 endfunction
 
 function! s:SetOutputBuffer(filetype)
