@@ -36,11 +36,12 @@ function! run#Run()
   let filetype = &filetype
 
   update
-  let output = system(b:cmd.' '.bufname('%'))
+  let output = s:RunCmd(b:cmd.' '.bufname('%'))
+  echom output
+  let output = output
+        \."\n----------------------------------------------------------\n"
   if v:shell_error == 0 && b:cmd_plus != ''
-    let output = output
-          \."\n-------------------------------------------------------------------\n"
-          \.system(b:cmd_plus)
+    let output = output.s:RunCmd(b:cmd_plus)
   endif
 
   let output_winnr = bufwinnr(s:output_win)
@@ -67,17 +68,27 @@ function! run#Run()
   endif
 endfunction
 
+function! s:RunCmd(cmd)
+  let tmpfile = tempname()
+  let output = system(a:cmd.' 2>'.tmpfile)
+  if v:shell_error
+    let stderr = join(readfile(tmpfile), "\n")
+    let output = output."\n------ Error ------\n".stderr
+  endif
+  return output
+endfunction
+
 function! s:SetOutputBuffer(filetype)
   normal! ggdG
   setlocal buftype=nofile foldmethod=indent
   let &filetype = a:filetype
   nnoremap <buffer> q :quit<cr>
 
-  syntax match OutputMsg /\v^.*(errors?|warnings?|notes?).*/
+  syntax match OutputMsg /\v\c^.*(errors?|warnings?|notes?).*/
         \ contains=Error,Warning,Note
-  syntax match Error /\verrors?/
-  syntax match Warning /\vwarnings?/
-  syntax match Note /\vnotes?/
+  syntax match Error /\v\cerrors?/
+  syntax match Warning /\v\cwarnings?/
+  syntax match Note /\v\cnotes?/
   highlight default link Warning Type
   highlight default link Note Statement
 endfunction
