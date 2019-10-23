@@ -12,7 +12,7 @@ Run any file and show output inside vim.
 With setting
 
 ```vim
-let g:run_cmd_c = 'clang'
+let g:run_cmd_c = 'gcc'
 let g:run_cmd_plus_c = './a.out'
 ```
 
@@ -66,7 +66,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 - example: 
 
     ```vim
-    let g:run_cmd_c = 'clang'
+    let g:run_cmd_c = 'gcc'
     let g:run_cmd_plus_c = './a.out'
     ```
 
