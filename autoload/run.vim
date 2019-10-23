@@ -37,7 +37,6 @@ function! run#Run()
 
   update
   let output = s:RunCmd(b:cmd.' '.bufname('%'))
-  echom output
   let output = output
         \."\n----------------------------------------------------------\n"
   if v:shell_error == 0 && b:cmd_plus != ''
@@ -71,9 +70,11 @@ endfunction
 function! s:RunCmd(cmd)
   let tmpfile = tempname()
   let output = system(a:cmd.' 2>'.tmpfile)
-  if v:shell_error
-    let stderr = join(readfile(tmpfile), "\n")
-    let output = output."\n------ Error ------\n".stderr
+  let stderr = join(readfile(tmpfile), "\n")
+  if stderr != ''
+    let output = output
+          \."\n------------------- Exception -------------------\n"
+          \.stderr
   endif
   return output
 endfunction
