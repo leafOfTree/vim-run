@@ -57,7 +57,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 - description:
 
-    `<filetype>` specifies cmd to run file and generate output. File name will be appended to it.
+    `<filetype>` specifies cmd to run file and generate output. File name will be appended to it. If there is `%` or `%:r` in cmd, they are replaced by file name and file name without extension. File name won't be appended in this case.
 
     `<filetype>_plus` specifies cmd to generate output. It's optional. It's useful if previous cmd only compiles file, for example.
 
@@ -66,12 +66,22 @@ Please stay up to date. Feel free to open an issue or a pull request.
 - example: 
 
     ```vim
+    let markdown_to_html = 'pandoc 
+          \ --metadata title="%" 
+          \ -c http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css 
+          \ -s % -o %:r.html'
+
     let g:run_cmd = {
-          \'c':           'gcc -Wall -Wextra -std=c99 -pedantic',
-          \'c_plus':      './a.out',
-          \'python':      'python',
+          \'c':             'gcc -Wall -Wextra -std=c99 -pedantic',
+          \'c_plus':        './a.out',
+          \'cpp':           'g++ -Wall -Wextra -pedantic',
+          \'javascript':    'node',
+          \'python':        'python',
+          \'markdown':      markdown_to_html,
+          \'markdown_plus': 'open %:r.html',
           \}
     ```
+
 #### `g:run_mapping`
 
 - description: custom run file mapping.
