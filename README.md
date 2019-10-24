@@ -9,14 +9,18 @@ Run any file and show output inside vim.
 
 ## Usage
 
-With setting
+With config
 
 ```vim
-let g:run_cmd_c = 'gcc'
-let g:run_cmd_plus_c = './a.out'
+
+let g:run_cmd = {
+      \'c':           'gcc -Wall -Wextra -std=c99 -pedantic',
+      \'c_plus':      './a.out',
+      \'python':      'python',
+      \}
 ```
 
-Open a `tmp.c` file and Press <kbd>go</kbd> in NORMAL mode. Vim will run the file and split a window that displays output.
+Open a `tmp.c` or `tmp.py` file and Press <kbd>go</kbd> in NORMAL mode. Vim will run the file and split a window that displays output.
 
 ## Installation
 
@@ -49,27 +53,21 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 ## Configuration
 
-#### `g:run_cmd_<filetype>`
+#### `g:run_cmd`: `{ key: <filetype>[_plus], value: cmd }`
 
-- description: cmd to run file and generate output. File name will be appended to it.
-- default: `''`
+- description: `<filetype>` specifies cmd to run file and generate output. File name will be appended to it.
+    `<filetype>_plus` specifies cmd to generate output. It's optional. It's useful if previous cmd only compiles file, for example.
+- type: `Dictionry`
+- default: `Undefined`
 - example: 
 
     ```vim
-    let g:run_cmd_javascript = 'node'
+    let g:run_cmd = {
+          \'c':           'gcc -Wall -Wextra -std=c99 -pedantic',
+          \'c_plus':      './a.out',
+          \'python':      'python',
+          \}
     ```
-
-#### `g:run_cmd_plus_<filetype>`
-
-- description: cmd to generate output. It's optional. It's useful if previous cmd only compiles file, for example.
-- default: `''`
-- example: 
-
-    ```vim
-    let g:run_cmd_c = 'gcc'
-    let g:run_cmd_plus_c = './a.out'
-    ```
-
 #### `g:run_mapping`
 
 - description: custom run file mapping.
@@ -87,7 +85,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 #### `g:run_output_scroll_bottom`
 
-- description: make output window scroll to bottom.
+- description: let output window scroll to bottom.
 - default: `0`
 
 [1]: https://github.com/VundleVim/Vundle.vim
