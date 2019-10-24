@@ -33,16 +33,26 @@ function! run#Run()
   else
     call run#Log('cmd: '.b:cmd)
   endif
-  let filetype = &filetype
 
   update
-  let output = s:RunCmd(b:cmd.' '.bufname('%'))
+  let cmd = s:PrepareCmd(b:cmd)
+  let output = s:RunCmd(cmd)
   let output = output
         \."\n----------------------------------------------------------\n"
   if v:shell_error == 0 && b:cmd_plus != ''
     let output = output.s:RunCmd(b:cmd_plus)
   endif
 
+  let filetype = &filetype
+  call s:ShowOutput(output, filetype)
+
+endfunction
+
+function! s:PrepareCmd(cmd)
+  return a:cmd.' '.bufname('%')
+endfunction
+
+function! s:ShowOutput(output, filetype)
   let output_winnr = bufwinnr(s:output_win)
   if output_winnr == -1
     silent execute 'split '.s:output_win
@@ -50,10 +60,10 @@ function! run#Run()
     execute output_winnr.'wincmd w'
   endif
 
-  call s:SetOutputBuffer(filetype)
+  call s:SetOutputBuffer(a:filetype)
 
   " Insert the output
-  call append(0, split(output, '\n'))
+  call append(0, split(a:output, '\n'))
   normal! zR
   if s:output_scroll_bottom
     normal! G
