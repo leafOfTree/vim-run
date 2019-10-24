@@ -27,29 +27,41 @@ let b:cmd_plus = ''
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! run#Run()
-  if b:cmd == ''
-    call run#Log('No cmd supplied')
+  if !exists("b:cmd") || b:cmd == ''
+    call run#Log('No cmd supplied', 'warning')
     return
-  else
-    call run#Log('cmd: '.b:cmd)
   endif
 
   update
-  let cmd = s:PrepareCmd(b:cmd)
-  let output = s:RunCmd(cmd)
-  let output = output
-        \."\n----------------------------------------------------------\n"
+
+  let output = s:RunCmd(b:cmd)
   if v:shell_error == 0 && b:cmd_plus != ''
-    let output = output.s:RunCmd(b:cmd_plus)
+    let output_plus = s:RunCmd(b:cmd_plus)
+    if output_plus != ''
+      let output = output
+            \."\n-------------------------------------------------------\n"
+            \.output_plus
+    endif
   endif
 
   let filetype = &filetype
-  call s:ShowOutput(output, filetype)
-
+  if output != ''
+    call run#Log('output: '.output)
+    call s:ShowOutput(output, filetype)
+  else
+    call run#Log('Empty output')
+  endif
 endfunction
 
 function! s:PrepareCmd(cmd)
-  return a:cmd.' '.bufname('%')
+  let cmd = a:cmd
+  if cmd =~ '%:r' || cmd =~ '%'
+    let cmd = substitute(cmd, "%:r", expand("%:r"), 'g')
+    let cmd = substitute(cmd, '%', bufname('%'), 'g')
+  else
+    let cmd = cmd.' '.bufname('%')
+  endif
+  return cmd
 endfunction
 
 function! s:ShowOutput(output, filetype)
@@ -78,12 +90,15 @@ function! s:ShowOutput(output, filetype)
 endfunction
 
 function! s:RunCmd(cmd)
+  let cmd = s:PrepareCmd(a:cmd)
+  call run#Log('cmd: '.cmd)
+
   let tmpfile = tempname()
-  let output = system(a:cmd.' 2>'.tmpfile)
+  let output = system(cmd.' 2>'.tmpfile)
   let stderr = join(readfile(tmpfile), "\n")
   if stderr != ''
     let output = output
-          \."\n------------------- Exception -------------------\n"
+          \."\n--------------------- Exception ---------------------\n"
           \.stderr
   endif
   return output
@@ -115,9 +130,15 @@ function! run#Update()
   endif
 endfunction
 
-function! run#Log(msg)
+function! run#Log(msg, ...)
   if s:debug
-    echom '['.s:name.'] '.a:msg
+    if a:0 == 1 && a:1 == 'warning'
+      echohl WarningMsg
+      echom '['.s:name.'] '. a:msg
+      echohl None
+    else
+      echom '['.s:name.'] '.a:msg
+    endif
   endif
 endfunction
 """}}}
