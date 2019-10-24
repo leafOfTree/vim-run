@@ -7,7 +7,10 @@ else
   execute 'nnoremap '.s:run_mapping.' :silent call run#Run()<cr>'
 endif
 
-augroup run
-  autocmd!
-  autocmd FileType * :call run#Update()
-augroup end
+if exists("g:run_cmd")
+  augroup vim_run
+    autocmd!
+    let filetypes = join(filter(keys(g:run_cmd), 'v:val !~ "_plus"'), ',')
+    execute "autocmd FileType ".filetypes." :call run#Update()"
+  augroup end
+endif

@@ -97,15 +97,9 @@ endfunction
 function! run#Update()
   let filetype = &filetype
 
-  let g_cmd = 'g:run_cmd_'.filetype
-  let g_cmd_plus = 'g:run_cmd_plus_'.filetype
-  if exists(g_cmd)
-    let b:cmd = eval(g_cmd)
-  else
-    let b:cmd = ''
-  endif
-  if exists(g_cmd_plus)
-    let b:cmd_plus = eval(g_cmd_plus)
+  let b:cmd = g:run_cmd[filetype]
+  if has_key(g:run_cmd, filetype.'_plus')
+    let b:cmd_plus = g:run_cmd[filetype.'_plus']
   else
     let b:cmd_plus = ''
   endif
