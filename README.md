@@ -55,8 +55,12 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 #### `g:run_cmd`: `{ key: <filetype>[_plus], value: cmd }`
 
-- description: `<filetype>` specifies cmd to run file and generate output. File name will be appended to it.
+- description:
+
+    `<filetype>` specifies cmd to run file and generate output. File name will be appended to it.
+
     `<filetype>_plus` specifies cmd to generate output. It's optional. It's useful if previous cmd only compiles file, for example.
+
 - type: `Dictionry`
 - default: `Undefined`
 - example: 
