@@ -84,7 +84,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 #### `g:run_mapping`
 
-- description: custom run file mapping.
+- description: run file mapping.
 - default: `'go'`
 - example: 
     
