@@ -95,11 +95,13 @@ function! s:RunCmd(cmd)
 
   let tmpfile = tempname()
   let output = system(cmd.' 2>'.tmpfile)
-  let stderr = join(readfile(tmpfile), "\n")
-  if stderr != ''
+  if filereadable(tmpfile)
+    let stderr = join(readfile(tmpfile), "\n")
+    if stderr != ''
     let output = output
           \."\n--------------------- Exception ---------------------\n"
           \.stderr
+    endif
   endif
   return output
 endfunction
