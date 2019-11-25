@@ -17,7 +17,6 @@ let g:run_cmd = {
       \'c':           'gcc -Wall -Wextra -std=c99 -pedantic',
       \'c_plus':      './a.out',
       \'python':      'python',
-      \'vim':         'source',
       \'javascript':  'node',
       \}
 ```
