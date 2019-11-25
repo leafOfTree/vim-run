@@ -18,6 +18,7 @@ let g:run_cmd = {
       \'c_plus':      './a.out',
       \'python':      'python',
       \'javascript':  'node',
+      \'vim':         'source',  
       \}
 ```
 

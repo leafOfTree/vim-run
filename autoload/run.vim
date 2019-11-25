@@ -53,6 +53,7 @@ function! run#Run()
   endif
 endfunction
 
+" Replace/Add arguments to cmd
 function! s:PrepareCmd(cmd)
   let cmd = a:cmd
   if cmd =~ '%:r' || cmd =~ '%'
@@ -90,20 +91,31 @@ function! s:ShowOutput(output, filetype)
 endfunction
 
 function! s:RunCmd(cmd)
-  let cmd = s:PrepareCmd(a:cmd)
-  call run#Log('cmd: '.cmd)
+  if &filetype == 'vim' && a:cmd == 'source'
+    let output = s:SourceVimscript()
+  else
+    let cmd = s:PrepareCmd(a:cmd)
+    call run#Log('cmd: '.cmd)
 
-  let tmpfile = tempname()
-  let output = system(cmd.' 2>'.tmpfile)
-  if filereadable(tmpfile)
-    let stderr = join(readfile(tmpfile), "\n")
-    if stderr != ''
-    let output = output
-          \."\n--------------------- Exception ---------------------\n"
-          \.stderr
+    let tmpfile = tempname()
+    let output = system(cmd.' 2>'.tmpfile)
+    if filereadable(tmpfile)
+      let stderr = join(readfile(tmpfile), "\n")
+      if stderr != ''
+        let output = output
+              \."\n--------------------- Exception ---------------------\n"
+              \.stderr
+      endif
     endif
   endif
   return output
+endfunction
+
+function! s:SourceVimscript()
+  redir => vimscript_output
+  silent source %
+  redir END
+  return vimscript_output
 endfunction
 
 function! s:SetOutputBuffer(filetype)
