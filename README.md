@@ -22,7 +22,7 @@ let g:run_cmd = {
       \}
 ```
 
-Open a `tmp.c` or `tmp.py` file and Press <kbd>go</kbd> in NORMAL mode. Vim will run the file and split a window that displays output.
+Open a `tmp.c` or `tmp.py` file and Press <kbd>go</kbd> in NORMAL mode. Vim will run the file and split a window that displays the output.
 
 ## Installation
 
@@ -55,13 +55,13 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 ## Configuration
 
-#### `g:run_cmd`: `{ key: <filetype>[_plus], value: cmd }`
+#### `g:run_cmd`: `{ key: <filetype>[_plus], value: <cmd> }`
 
 - description:
 
-    `<filetype>` specifies cmd to run file and generate output. File name will be appended to it. If there is `%` or `%:r` in cmd, they are replaced by file name and file name without extension. File name won't be appended in this case.
+    `<filetype>` specifies `<cmd>` to run. File name will be appended to it. If there is `%` or `%:r` in the `<cmd>`, they are replaced by file name or file name without extension. File name won't be appended in this case.
 
-    `<filetype>_plus` specifies cmd to generate output. It's optional. It's useful if previous cmd only compiles file, for example.
+    `<filetype>_plus` specifies `<cmd>` to run after the previous one. It's optional. It's useful if the previous `<cmd>` only compiles file, for example.
 
 - type: `Dictionry`
 - default: `Undefined`
@@ -86,7 +86,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 #### `g:run_mapping`
 
-- description: run file mapping.
+- description: key mapping to run file.
 - default: `'go'`
 - example: 
     
