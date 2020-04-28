@@ -133,7 +133,11 @@ endfunction
 function! run#Update()
   let filetype = &filetype
 
-  let b:cmd = g:run_cmd[filetype]
+  if has_key(g:run_cmd, filetype)
+    let b:cmd = g:run_cmd[filetype]
+  else
+    let b:cmd = ''
+  endif
   if has_key(g:run_cmd, filetype.'_plus')
     let b:cmd_plus = g:run_cmd[filetype.'_plus']
   else
