@@ -97,15 +97,11 @@ function! s:RunCmd(cmd)
     let cmd = s:PrepareCmd(a:cmd)
     call run#Log('cmd: '.cmd)
 
-    let tmpfile = tempname()
-    let output = system(cmd.' 2>'.tmpfile)
-    if filereadable(tmpfile)
-      let stderr = join(readfile(tmpfile), "\n")
-      if stderr != ''
-        let output = output
-              \."\n--------------------- Exception ---------------------\n"
-              \.stderr
-      endif
+    silent let output = system(cmd)
+    if v:shell_error
+      let output = output
+            \."\n--------------------- Error ---------------------\n"
+            \.v:shell_error
     endif
   endif
   return output
