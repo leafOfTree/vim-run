@@ -52,7 +52,6 @@ Open a `tmp.c` or `tmp.py` file and Press <kbd>go</kbd> in NORMAL mode. Vim will
 
 Please stay up to date. Feel free to open an issue or a pull request.
 
-
 ## Configuration
 
 #### `g:run_cmd`: `{ key: <filetype>[_plus], value: <cmd> }`
@@ -103,6 +102,10 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 - description: let output window scroll to bottom.
 - default: `0`
+
+## Custom output syntax highlighting
+
+You can add `syntax/run-<filetype>.vim` to custom `<filetype>` output's syntax highlighting. `syntax/run-go.vim`, `syntax/run-c.vim`, ..., for example.
 
 [1]: https://github.com/VundleVim/Vundle.vim
 [2]: https://github.com/tpope/vim-pathogen
