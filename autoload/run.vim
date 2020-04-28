@@ -17,6 +17,8 @@ let s:output_scroll_bottom = exists('g:run_output_scroll_bottom')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:name = 'vim-run'
 let s:output_win = '__output__'
+let s:plus_split = "\n-------------------------------------------------------\n"
+let s:error_split = "\n--------------------- Shell Error ---------------------\n"
 let b:cmd = ''
 let b:cmd_plus = ''
 """}}}
@@ -38,9 +40,13 @@ function! run#Run()
   if v:shell_error == 0 && b:cmd_plus != ''
     let output_plus = s:RunCmd(b:cmd_plus)
     if output_plus != ''
-      let output = output
-            \."\n-------------------------------------------------------\n"
-            \.output_plus
+      if output != ''
+        let output = output
+              \.s:plus_split
+              \.output_plus
+      else
+        let output = output_plus
+      endif
     endif
   endif
 
@@ -98,9 +104,9 @@ function! s:RunCmd(cmd)
     call run#Log('cmd: '.cmd)
 
     silent let output = system(cmd)
-    if v:shell_error
+    if v:shell_error && output == ''
       let output = output
-            \."\n--------------------- Error ---------------------\n"
+            \.s:error_split
             \.v:shell_error
     endif
   endif
@@ -117,17 +123,9 @@ endfunction
 
 function! s:SetOutputBuffer(filetype)
   normal! ggdG
-  setlocal buftype=nofile foldmethod=indent
-  let &filetype = a:filetype
+  setlocal buftype=nofile foldmethod=indent filetype=run
   nnoremap <buffer> q :quit<cr>
-
-  syntax match OutputMsg /\v\c^.*(errors?|warnings?|notes?).*/
-        \ contains=Error,Warning,Note
-  syntax match Error /\v\cerrors?/
-  syntax match Warning /\v\cwarnings?/
-  syntax match Note /\v\cnotes?/
-  highlight default link Warning Type
-  highlight default link Note Statement
+  execute 'runtime syntax/run-'.a:filetype.'.vim'
 endfunction
 
 function! run#Update()
