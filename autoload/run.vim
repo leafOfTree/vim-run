@@ -51,12 +51,8 @@ function! run#Run()
   endif
 
   let filetype = &filetype
-  if output != ''
-    call run#Log('output: '.output)
-    call s:ShowOutput(output, filetype)
-  else
-    call run#Log('Empty output')
-  endif
+  call run#Log('output: '.output)
+  call s:ShowOutput(output, filetype)
 endfunction
 
 " Replace/Add arguments to cmd
@@ -123,7 +119,7 @@ endfunction
 
 function! s:SetOutputBuffer(filetype)
   normal! ggdG
-  setlocal buftype=nofile foldmethod=indent filetype=run
+  setlocal buftype=popup foldmethod=indent filetype=run
   nnoremap <buffer> q :quit<cr>
   execute 'runtime syntax/run-'.a:filetype.'.vim'
 endfunction
