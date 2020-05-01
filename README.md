@@ -60,7 +60,13 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
     Specifies `<cmd>` to run for `<filetype>`. Filename will be appended to the `<cmd>`. 
 
-    If there are `%` or `%:r` in the `<cmd>`, they are replaced by filename or filename without extension. Meanwhile filename won't be appended to the `<cmd>`.
+    | Special chars | Replacement                 |
+    |---------------|-----------------------------|
+    | %             | Filename                    |
+    | %:r           | Filename without extennsion |
+    | %t            | Temp filename               |
+
+    If there are special chars in `<cmd>`, they are replaced. Meanwhile filename won't be appended to the `<cmd>`.
 
     Optional: specifies `<cmd>` to run for `<filetype_plus>` after the previous one. Useful if the previous `<cmd>` only compiles file, for example.
 
@@ -103,6 +109,11 @@ Please stay up to date. Feel free to open an issue or a pull request.
 #### `g:run_output_scroll_bottom`
 
 - description: let the output window scroll to bottom.
+- default: `0`. It can be `0` or `1`.
+
+#### `g:run_debug = 0`
+
+- description: show the debug messages.
 - default: `0`. It can be `0` or `1`.
 
 ## Custom output syntax highlighting

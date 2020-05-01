@@ -21,6 +21,7 @@ let s:plus_split = "\n-------------------------------------------------------\n"
 let s:error_split = "\n--------------------- Shell Error ---------------------\n"
 let b:cmd = ''
 let b:cmd_plus = ''
+let s:tmpfile = tempname()
 """}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -58,12 +59,21 @@ endfunction
 " Replace/Add arguments to cmd
 function! s:PrepareCmd(cmd)
   let cmd = a:cmd
-  if cmd =~ '%:r' || cmd =~ '%'
-    let cmd = substitute(cmd, "%:r", expand("%:r"), 'g')
-    let cmd = substitute(cmd, '%', bufname('%'), 'g')
+  echom cmd
+  if cmd =~ '%'
+    if cmd =~ '%:r'
+      let cmd = substitute(cmd, "%:r", expand("%:r"), 'g')
+    endif
+    if cmd =~ '%t'
+      let cmd = substitute(cmd, '%temp', s:tmpfile, 'g')
+    endif
+    if cmd =~ '%' 
+      let cmd = substitute(cmd, '%', bufname('%'), 'g')
+    endif
   else
     let cmd = cmd.' '.bufname('%')
   endif
+  echom cmd
   return cmd
 endfunction
 
