@@ -85,7 +85,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 #### `g:run_mapping`
 
-- description: key mapping to run file.
+- description: key mapping to run the current file.
 - default: `'go'`
 - example: 
     
@@ -95,17 +95,17 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 #### `g:run_output_focus`
 
-- description: focus output window.
-- default: `0`
+- description: focus the output window. 
+- default: `0`. It can be `0` or `1`.
 
 #### `g:run_output_scroll_bottom`
 
-- description: let output window scroll to bottom.
-- default: `0`
+- description: let the output window scroll to bottom.
+- default: `0`. It can be `0` or `1`.
 
 ## Custom output syntax highlighting
 
-You can add `syntax/run-<filetype>.vim` to custom `<filetype>` output's syntax highlighting. `syntax/run-go.vim`, `syntax/run-c.vim`, ..., for example.
+You can add `syntax/run-<filetype>.vim` to custom `<filetype>` output's syntax highlighting. Examples are `syntax/run-go.vim`, `syntax/run-c.vim`, ...
 
 [1]: https://github.com/VundleVim/Vundle.vim
 [2]: https://github.com/tpope/vim-pathogen
