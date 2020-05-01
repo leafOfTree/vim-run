@@ -18,6 +18,8 @@ let g:run_cmd = {
       \'c_plus':      './a.out',
       \'python':      'python',
       \'javascript':  'node',
+      \'tsx':         'tsc --outFile %t %',
+      \'tsx_plus':    'node %t',
       \'vim':         'source',  
       \}
 ```
