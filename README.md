@@ -54,15 +54,17 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 ## Configuration
 
-#### `g:run_cmd`: `{ key: <filetype>[_plus], value: <cmd> }`
+#### `g:run_cmd`: `{ key: <filetype[_plus]>, value: <cmd> }`
 
 - description:
 
-    `<filetype>` specifies `<cmd>` to run. File name will be appended to it. If there is `%` or `%:r` in the `<cmd>`, they are replaced by file name or file name without extension. File name won't be appended in this case.
+    Specifies `<cmd>` to run for `<filetype>`. Filename will be appended to the `<cmd>`. 
 
-    `<filetype>_plus` specifies `<cmd>` to run after the previous one. It's optional. It's useful if the previous `<cmd>` only compiles file, for example.
+    If there are `%` or `%:r` in the `<cmd>`, they are replaced by filename or filename without extension. Meanwhile filename won't be appended to the `<cmd>`.
 
-- type: `Dictionry`
+    Optional: specifies `<cmd>` to run for `<filetype_plus>` after the previous one. Useful if the previous `<cmd>` only compiles file, for example.
+
+- type: `Dictionary`
 - default: `Undefined`
 - example: 
 
