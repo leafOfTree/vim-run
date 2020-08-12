@@ -59,7 +59,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 - description:
 
-    `<filetype>` specifies `<cmd>` to run. File name will be appended to it. If there is `%` or `%:r` in the `<cmd>`, they are replaced by file name or file name without extension. File name won't be appended in this case.
+    `<filetype>` specifies `<cmd>` to run. Filename will be appended to it. If there is `%` or `%:r` in the `<cmd>`, they are replaced by filename or filename without extension. Filename won't be appended in this case.
 
     `<filetype>_plus` specifies `<cmd>` to run after the previous one. It's optional. It's useful if the previous `<cmd>` only compiles file, for example.
 
