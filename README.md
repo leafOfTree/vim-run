@@ -18,6 +18,8 @@ let g:run_cmd = {
       \'c_plus':      './a.out',
       \'python':      'python',
       \'javascript':  'node',
+      \'tsx':         'tsc --outFile %t %',
+      \'tsx_plus':    'node %t',
       \'vim':         'source',  
       \}
 ```
@@ -52,18 +54,25 @@ Open a `tmp.c` or `tmp.py` file and Press <kbd>go</kbd> in NORMAL mode. Vim will
 
 Please stay up to date. Feel free to open an issue or a pull request.
 
-
 ## Configuration
 
-#### `g:run_cmd`: `{ key: <filetype>[_plus], value: <cmd> }`
+#### `g:run_cmd`: `{ key: <filetype[_plus]>, value: <cmd> }`
 
 - description:
 
-    `<filetype>` specifies `<cmd>` to run. Filename will be appended to it. If there is `%` or `%:r` in the `<cmd>`, they are replaced by filename or filename without extension. Filename won't be appended in this case.
+    Specifies `<cmd>` to run for `<filetype>`. Filename will be appended to the `<cmd>`. 
 
-    `<filetype>_plus` specifies `<cmd>` to run after the previous one. It's optional. It's useful if the previous `<cmd>` only compiles file, for example.
+    | Special chars | Replacement                 |
+    |---------------|-----------------------------|
+    | %             | Filename                    |
+    | %:r           | Filename without extennsion |
+    | %t            | Temp filename               |
 
-- type: `Dictionry`
+    If there are special chars in `<cmd>`, they are replaced. Meanwhile filename won't be appended to the `<cmd>`.
+
+    Optional: specifies `<cmd>` to run for `<filetype_plus>` after the previous one. Useful if the previous `<cmd>` only compiles file.
+
+- type: `Dictionary`
 - default: `Undefined`
 - example: 
 
@@ -86,7 +95,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 #### `g:run_mapping`
 
-- description: key mapping to run file.
+- description: key mapping to run the current file.
 - default: `'go'`
 - example: 
     
@@ -96,13 +105,22 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 #### `g:run_output_focus`
 
-- description: focus output window.
-- default: `0`
+- description: focus the output window. 
+- default: `0`. It can be `0` or `1`.
 
 #### `g:run_output_scroll_bottom`
 
-- description: let output window scroll to bottom.
-- default: `0`
+- description: let the output window scroll to bottom.
+- default: `0`. It can be `0` or `1`.
+
+#### `g:run_debug = 0`
+
+- description: show the debug messages.
+- default: `0`. It can be `0` or `1`.
+
+## Custom output syntax highlighting
+
+You can add `syntax/run-<filetype>.vim` to custom `<filetype>` output's syntax highlighting. Examples are `syntax/run-go.vim`, `syntax/run-c.vim`, ...
 
 [1]: https://github.com/VundleVim/Vundle.vim
 [2]: https://github.com/tpope/vim-pathogen

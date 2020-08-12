@@ -6,7 +6,7 @@ let s:run_debug = exists('g:run_debug') ? g:run_debug : 0
 if s:run_debug
   execute 'nnoremap '.s:run_mapping.' :call run#Run()<cr>'
 else
-  execute 'nnoremap '.s:run_mapping.' :silent call run#Run()<cr>'
+  execute 'nnoremap<silent> '.s:run_mapping.' :silent call run#Run()<cr>'
 endif
 
 " Autocmds
