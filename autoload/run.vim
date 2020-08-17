@@ -38,7 +38,7 @@ function! run#Run()
   update
 
   let output = s:RunCmd(b:cmd)
-  if v:shell_error == 0 && b:cmd_plus != ''
+  if v:shell_error == 0 && exists("b:cmd_plus") && b:cmd_plus != ''
     let output_plus = s:RunCmd(b:cmd_plus)
     if output_plus != ''
       if output != ''
