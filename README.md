@@ -66,15 +66,15 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
     Set `<cmd>` for `<filetype>`. The filename is appended to the `<cmd>`. 
 
-    | Special chars | Value                       |
-    |---------------|-----------------------------|
-    | %             | Filename                    |
-    | %:r           | Filename without extension  |
-    | %t            | Temp filename given by vim  |
+    - If there are special chars in `<cmd>`, they will be replaced with a proper value. Meanwhile the filename won't be appended to the `<cmd>`.
 
-    If there are special chars in `<cmd>`, they will be replaced with a proper value. Meanwhile the filename won't be appended to the `<cmd>`.
+      | Special chars | Value                       |
+      |---------------|-----------------------------|
+      | %             | Filename                    |
+      | %:r           | Filename without extension  |
+      | %t            | Temp filename given by vim  |
 
-    Optional: set `<cmd>` for `<filetype>_plus` after the previous one. Useful if the previous `<cmd>` only compiles file.
+    - Optional: set `<cmd>` for `<filetype>_plus` which runs after the previous one. Useful when the previous only compiles file.
 
 - type: `Dictionary`
 - default: `Undefined`
