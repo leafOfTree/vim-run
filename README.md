@@ -12,6 +12,7 @@ Run any file and show output inside vim.
 With config
 
 ```vim
+let g:run_mapping = 'go' " default mapping
 
 let g:run_cmd = {
       \'c':           'gcc -Wall -Wextra -std=c99 -pedantic',
@@ -56,21 +57,24 @@ Please stay up to date. Feel free to open an issue or a pull request.
 
 ## Configuration
 
-#### `g:run_cmd`: `{ key: <filetype[_plus]>, value: <cmd> }`
+#### `g:run_cmd`
+
+- `{ key: <filetype>, value: <cmd> }`
+- `{ key: <filetype>_plus, value: <cmd> }`
 
 - description:
 
-    Specifies `<cmd>` to run for `<filetype>`. Filename will be appended to the `<cmd>`. 
+    Set `<cmd>` for `<filetype>`. The filename is appended to the `<cmd>`. 
 
-    | Special chars | Replacement                 |
+    | Special chars | Value                       |
     |---------------|-----------------------------|
     | %             | Filename                    |
-    | %:r           | Filename without extennsion |
-    | %t            | Temp filename               |
+    | %:r           | Filename without extension  |
+    | %t            | Temp filename given by vim  |
 
-    If there are special chars in `<cmd>`, they are replaced. Meanwhile filename won't be appended to the `<cmd>`.
+    If there are special chars in `<cmd>`, they will be replaced with a proper value. Meanwhile the filename won't be appended to the `<cmd>`.
 
-    Optional: specifies `<cmd>` to run for `<filetype_plus>` after the previous one. Useful if the previous `<cmd>` only compiles file.
+    Optional: set `<cmd>` for `<filetype>_plus` after the previous one. Useful if the previous `<cmd>` only compiles file.
 
 - type: `Dictionary`
 - default: `Undefined`
@@ -113,9 +117,9 @@ Please stay up to date. Feel free to open an issue or a pull request.
 - description: let the output window scroll to bottom.
 - default: `0`. It can be `0` or `1`.
 
-#### `g:run_debug = 0`
+#### `g:run_debug`
 
-- description: show the debug messages.
+- description: show debug messages.
 - default: `0`. It can be `0` or `1`.
 
 ## Custom output syntax highlighting
