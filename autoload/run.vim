@@ -133,7 +133,7 @@ endfunction
 
 function! s:SetOutputBuffer(filetype)
   normal! ggdG
-  setlocal buftype=popup foldmethod=indent filetype=run
+  setlocal buftype=nofile foldmethod=indent filetype=run
   nnoremap <buffer> q :quit<cr>
   execute 'runtime syntax/run-'.a:filetype.'.vim'
 endfunction
