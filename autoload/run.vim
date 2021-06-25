@@ -52,18 +52,18 @@ function! run#Run()
   endif
 
   let filetype = &filetype
-  if output != ''
+
+  if output != '' || bufwinnr(s:output_win) != -1
     call run#Log('output: '.output)
     call s:ShowOutput(output, filetype)
   else
-    call run#Log('Empty output')
+    call run#Log('Skip empty output')
   endif
 endfunction
 
 " Replace/Add arguments to cmd
 function! s:PrepareCmd(cmd)
   let cmd = a:cmd
-  echom cmd
   if cmd =~ '%'
     if cmd =~ '%:r'
       let cmd = substitute(cmd, "%:r", expand("%:r"), 'g')
@@ -77,7 +77,6 @@ function! s:PrepareCmd(cmd)
   else
     let cmd = cmd.' '.bufname('%')
   endif
-  echom cmd
   return cmd
 endfunction
 
