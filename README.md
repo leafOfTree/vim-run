@@ -25,7 +25,7 @@ let g:run_cmd = {
       \}
 ```
 
-Open a `tmp.c` or `tmp.py` file and Press <kbd>go</kbd> in NORMAL mode. Vim will run the file and split a window that displays the output.
+Open a `tmp.c` or `tmp.py` file and Press <kbd>go</kbd> in NORMAL mode. Vim will run the file and split a window to display the output.
 
 ## Installation
 
@@ -74,7 +74,7 @@ Please stay up to date. Feel free to open an issue or a pull request.
       | %:r           | Filename without extension  |
       | %t            | Temp filename given by vim  |
 
-    - Optional: set `<cmd>` for `<filetype>_plus` which runs after the previous one. Useful when the previous only compiles file.
+    - Optional: set `<cmd>` for `<filetype>_plus` which runs after the previous one. Useful when the previous only compiles the file.
 
 - type: `Dictionary`
 - default: `Undefined`
@@ -94,8 +94,11 @@ Please stay up to date. Feel free to open an issue or a pull request.
           \'python':        'python',
           \'markdown':      markdown_to_html,
           \'markdown_plus': 'open %:r.html',
+          \'vim':           'source',  
           \}
     ```
+
+Note: you need to use `'source'` for `vim` files.
 
 #### `g:run_mapping`
 
