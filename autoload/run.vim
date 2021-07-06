@@ -125,7 +125,7 @@ endfunction
 function! s:SourceVimscript()
   let vimscript_output = ''
   redir => vimscript_output
-  silent source %
+  silent! source %
   redir END
   return vimscript_output
 endfunction
