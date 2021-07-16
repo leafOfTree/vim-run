@@ -112,18 +112,15 @@ Note: you need to use `'source'` for `vim` files.
 
 #### `g:run_output_focus`
 
-- description: focus the output window. 
-- default: `0`. It can be `0` or `1`.
+Focus the output window. Default: `0`. (`0` or `1`).
 
 #### `g:run_output_scroll_bottom`
 
-- description: let the output window scroll to bottom.
-- default: `0`. It can be `0` or `1`.
+Let the output window scroll to bottom. Default: `0`. (`0` or `1`).
 
 #### `g:run_debug`
 
-- description: show debug messages.
-- default: `0`. It can be `0` or `1`.
+Show debug messages. Default: `0`. (`0` or `1`).
 
 ## Custom output syntax highlighting
 
