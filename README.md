@@ -25,7 +25,7 @@ let g:run_cmd = {
       \}
 ```
 
-Open a `tmp.c` or `tmp.py` file and Press <kbd>go</kbd> in NORMAL mode. Vim will run the file and split a window to display the output.
+Open a `tmp.c` or `tmp.py` file and Press <kbd>g</kbd><kbd>o</kbd> in NORMAL mode. Vim will run the file and split a window to display the output.
 
 ## Installation
 
