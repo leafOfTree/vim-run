@@ -1,4 +1,4 @@
-syntax match Number /-\?\d\+/
+syntax match Number /\<-\?\d\+\>/
 syntax match Error /\cerrors\?/
 syntax match Error /\cshell error/
 syntax match Error /\c\w*errors\?/
