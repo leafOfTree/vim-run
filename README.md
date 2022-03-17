@@ -119,6 +119,10 @@ Focus the output window. Default: `0`. (`0` or `1`).
 
 Let the output window scroll to bottom. Default: `0`. (`0` or `1`).
 
+#### `g:run_output_vertically`
+
+Split output window vertically. Default: `0`. (`0` or `1`).
+
 #### `g:run_debug`
 
 Show debug messages. Default: `0`. (`0` or `1`).

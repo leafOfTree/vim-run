@@ -8,6 +8,8 @@ let s:output_focus = exists('g:run_output_focus')
       \ ? g:run_output_focus : 0
 let s:output_scroll_bottom = exists('g:run_output_scroll_bottom') 
       \ ? g:run_output_scroll_bottom : 0
+let s:output_vertically = exists('g:run_output_vertically')
+      \? g:run_output_vertically : 0
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -83,7 +85,8 @@ endfunction
 function! s:ShowOutput(output, filetype)
   let output_winnr = bufwinnr(s:output_win)
   if output_winnr == -1
-    silent execute 'split '.s:output_win
+    let split_cmd = s:output_vertically ? 'vsplit' : 'split'
+    silent execute split_cmd.' '.s:output_win
   else
     execute output_winnr.'wincmd w'
   endif
