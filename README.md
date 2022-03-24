@@ -114,8 +114,8 @@ Note: you need to use `'source'` for `vim` files.
 Or you can map key as usual
 
 ```vim
-nnoremap <cr> <Cmd>call run#Run()<cr>
-inoremap <d-cr> <Cmd>call run#Run()<cr>
+nnoremap <c-cr> <Cmd>call run#Run()<cr>
+inoremap <c-cr> <Cmd>call run#Run()<cr>
 ```
 
 #### `g:run_output_focus`
