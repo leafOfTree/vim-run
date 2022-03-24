@@ -103,7 +103,7 @@ Note: you need to use `'source'` for `vim` files.
 
 #### `g:run_mapping`
 
-- description: key mapping to run the current file.
+- description: key mapping to run the current file in Normal mode.
 - default: `'go'`
 - example: 
     
@@ -111,11 +111,11 @@ Note: you need to use `'source'` for `vim` files.
     let g:run_mapping = '<F5>'
     ```
 
-Or you can map key as normal
+Or you can map key as usual
 
 ```vim
-nnoremap<silent> <cr> :silent call run#Run()<cr>
-inoremap<silent> <a-cr> <esc>:silent call run#Run()<cr>a
+nnoremap <cr> <Cmd>call run#Run()<cr>
+inoremap <d-cr> <Cmd>call run#Run()<cr>
 ```
 
 #### `g:run_output_focus`
