@@ -111,6 +111,13 @@ Note: you need to use `'source'` for `vim` files.
     let g:run_mapping = '<F5>'
     ```
 
+Or you can map key as normal
+
+```vim
+nnoremap<silent> <cr> :silent call run#Run()<cr>
+inoremap<silent> <a-cr> <esc>:silent call run#Run()<cr>a
+```
+
 #### `g:run_output_focus`
 
 Focus the output window. Default: `0`. (`0` or `1`).
