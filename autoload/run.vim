@@ -32,14 +32,52 @@ let s:tmpfile = tempname()
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! run#Run()
-  if !exists("b:cmd") || b:cmd == ''
+  if !s:IsValidCmdForCurrentFile()
     call run#Log('No cmd supplied', 'warning')
     return
   endif
 
   update
 
+  call s:ClearPreviousOutputIfExists()
+  call run#Info('Running')
   let output = s:RunCmd(b:cmd)
+  let output = s:AppendPlusOutput(output)
+  call s:ShowOutputIfExists(output)
+
+  redraw!
+endfunction
+
+function! s:IsValidCmdForCurrentFile()
+  return exists("b:cmd") && b:cmd != ''
+endfunction
+
+function! s:ShowOutputIfExists(output)
+  " if output or output-buffer exists
+  if a:output == '' && bufwinnr(s:output_win) == -1
+    call run#Info('Output is null')
+    return
+  endif
+
+  call run#Log('Output: '.a:output)
+  call s:ShowOutput(a:output)
+endfunction
+
+function! s:ClearPreviousOutputIfExists()
+  let output_winnr = bufwinnr(s:output_win)
+  if output_winnr == -1
+    return
+  endif
+
+  execute output_winnr.'wincmd w'
+  %d
+  redraw!
+  wincmd p
+endfunction
+
+function! s:AppendPlusOutput(output)
+  let output = a:output
+
   if v:shell_error == 0 && exists("b:cmd_plus") && b:cmd_plus != ''
     let output_plus = s:RunCmd(b:cmd_plus)
     if output_plus != ''
@@ -53,14 +91,7 @@ function! run#Run()
     endif
   endif
 
-  let filetype = &filetype
-
-  if output != '' || bufwinnr(s:output_win) != -1
-    call run#Log('output: '.output)
-    call s:ShowOutput(output, filetype)
-  else
-    call run#Log('Skip empty output')
-  endif
+  return output
 endfunction
 
 " Replace/Add arguments to cmd
@@ -82,7 +113,7 @@ function! s:PrepareCmd(cmd)
   return cmd
 endfunction
 
-function! s:ShowOutput(output, filetype)
+function! s:NewOrSwitchToOutputBuffer()
   let output_winnr = bufwinnr(s:output_win)
   if output_winnr == -1
     let split_cmd = s:output_vertically ? 'vsplit' : 'split'
@@ -90,18 +121,30 @@ function! s:ShowOutput(output, filetype)
   else
     execute output_winnr.'wincmd w'
   endif
+endfunction
 
-  call s:SetOutputBuffer(a:filetype)
+function! s:ShowOutput(output)
+  call s:NewOrSwitchToOutputBuffer()
+  call s:SetOutputBuffer()
+  call s:InsertOutputt(a:output)
+  call s:FormatOutput()
+  call s:Goback()
+endfunction
 
-  " Insert the output
+function! s:InsertOutputt(output)
   call append(0, split(a:output, '\n'))
+endfunction
+
+function! s:FormatOutput()
   normal! zR
   if s:output_scroll_bottom
     normal! G
   else
     normal! gg
   endif
+endfunction
 
+function! s:Goback()
   " Go to previous window
   if !s:output_focus
     wincmd p
@@ -133,11 +176,12 @@ function! s:SourceVimscript()
   return vimscript_output
 endfunction
 
-function! s:SetOutputBuffer(filetype)
-  normal! ggdG
+function! s:SetOutputBuffer()
+  %d
+  echo ''
   setlocal buftype=nofile foldmethod=indent filetype=run nobuflisted
   nnoremap <buffer> q :quit<cr>
-  execute 'runtime syntax/run-'.a:filetype.'.vim'
+  execute 'runtime syntax/run-'.&filetype.'.vim'
 endfunction
 
 function! run#Update()
@@ -166,6 +210,11 @@ function! run#Log(msg, ...)
     endif
   endif
 endfunction
+
+function! run#Info(msg, ...)
+  echom '['.s:name.'] '. a:msg
+endfunction
+
 """}}}
 
 " vim: fdm=marker
