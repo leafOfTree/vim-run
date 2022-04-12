@@ -137,6 +137,7 @@ endfunction
 
 function! s:FormatOutput()
   normal! zR
+
   if s:output_scroll_bottom
     normal! G
   else
