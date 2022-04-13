@@ -17,7 +17,8 @@ let g:run_mapping = 'go' " default mapping
 let g:run_cmd = {
       \'c':           'gcc -Wall -Wextra -std=c99 -pedantic',
       \'c_plus':      './a.out',
-      \'java':        'java',
+      \'java':        'javac -Xdiags:verbose -Xlint:unchecked',
+      \'java_plus':   'java %:r',
       \'python':      'python',
       \'javascript':  'node',
       \'tsx':         'tsc --outFile %t %',
