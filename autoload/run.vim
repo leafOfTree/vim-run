@@ -19,8 +19,8 @@ let s:output_vertically = exists('g:run_output_vertically')
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let s:name = 'vim-run'
 let s:output_win = '__output__'
-let s:plus_split = "\n--------------------- Plus Output ----------------------\n"
-let s:error_split = "\n--------------------- Shell Error ---------------------\n"
+let s:plus_split = "\n--------------------------------------------------------\n\n"
+let s:error_split = "\n--------------------- Shell Error ----------------------\n"
 let b:cmd = ''
 let b:cmd_plus = ''
 let s:tmpfile = tempname()
