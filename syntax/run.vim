@@ -1,5 +1,5 @@
-syntax match Number /\<-\?[[:digit:]]\?\>/
-syntax match Number /\<-\?[[:digit:].Ee-]\{2,}\>/
+syntax match Number /\(#\)\@<!\<-\?[[:digit:]]\?\>/
+syntax match Number /\(#\)\@<!\<-\?[[:digit:].Ee-]\{2,}\>/
 syntax match Error /\cerrors\?/
 syntax match Error /\cshell error/
 syntax match Error /\c\w*errors\?/
