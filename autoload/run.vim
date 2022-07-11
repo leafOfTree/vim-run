@@ -33,7 +33,7 @@ let s:tmpfile = tempname()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! run#Run()
   if !s:IsValidCmdForCurrentFile()
-    call run#Log('No cmd supplied', 'warning')
+    call run#Info('No cmd found for filetype: '.&filetype, 'warning')
     return
   endif
 
@@ -213,7 +213,13 @@ function! run#Log(msg, ...)
 endfunction
 
 function! run#Info(msg, ...)
-  echom '['.s:name.'] '. a:msg
+  if a:0 == 1 && a:1 == 'warning'
+    echohl WarningMsg
+    echom '['.s:name.'] '. a:msg
+    echohl None
+  else
+    echom '['.s:name.'] '.a:msg
+  endif
 endfunction
 
 """}}}
