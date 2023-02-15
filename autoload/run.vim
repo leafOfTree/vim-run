@@ -38,13 +38,16 @@ function! run#Run()
   endif
 
   update
+  call s:RunCmdAndShowOutput()
+endfunction
 
+function! s:RunCmdAndShowOutput()
   call s:ClearPreviousOutputIfExists()
+
   call run#Info('Running')
   let output = s:RunCmd(b:cmd)
   let output = s:AppendPlusOutput(output)
   call s:ShowOutputIfExists(output)
-
   redraw!
 endfunction
 
@@ -155,16 +158,15 @@ endfunction
 function! s:RunCmd(cmd)
   if &filetype == 'vim' && a:cmd == 'source'
     let output = s:SourceVimscript()
-  else
-    let cmd = s:PrepareCmd(a:cmd)
-    call run#Log('cmd: '.cmd)
+    return output
+  endif
 
-    silent let output = system(cmd)
-    if v:shell_error && output == ''
-      let output = output
-            \.s:error_split
-            \.v:shell_error
-    endif
+  let cmd = s:PrepareCmd(a:cmd)
+  silent let output = system(cmd)
+  if v:shell_error && output == ''
+    let output = output
+          \.s:error_split
+          \.v:shell_error
   endif
   return output
 endfunction
