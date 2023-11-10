@@ -172,11 +172,7 @@ function! s:RunCmd(cmd)
 endfunction
 
 function! s:SourceVimscript()
-  let vimscript_output = ''
-  redir => vimscript_output
-  silent! source %
-  redir END
-  return vimscript_output
+  return execute('source %', 'silent!')
 endfunction
 
 function! s:SetOutputBuffer()
