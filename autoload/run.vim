@@ -172,7 +172,7 @@ function! s:RunCmd(cmd)
 endfunction
 
 function! s:SourceVimscript()
-  return execute('source %', 'silent!')
+  return execute('source %')
 endfunction
 
 function! s:SetOutputBuffer()
