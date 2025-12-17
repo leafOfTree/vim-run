@@ -1,5 +1,5 @@
-syntax match Number /\(#\)\@<!\<-\?[[:digit:]]\?/
-syntax match Number /\(#\)\@<!\<-\?[[:digit:].Ee-]\{2,}/
+syntax match Number /\W\zs\d\+\w\+/
+syntax match Number /^\d\+\w\+/
 syntax match Error /\c\w*exception\?/
 syntax match Error /\c\w*errors\?/
 syntax match Warning /\c\warnings\?/
