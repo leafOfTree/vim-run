@@ -129,12 +129,19 @@ endfunction
 function! s:ShowOutput(output)
   call s:NewOrSwitchToOutputBuffer()
   call s:SetOutputBuffer()
-  call s:InsertOutputt(a:output)
+  call s:InsertOutput(a:output)
   call s:FormatOutput()
+  call s:StripAnsiCodes()
   call s:Goback()
 endfunction
 
-function! s:InsertOutputt(output)
+
+function! s:StripAnsiCodes()
+    " Remove ANSI escape sequences
+    %s/\e\[[0-9;]*m//ge
+endfunction
+
+function! s:InsertOutput(output)
   call append(0, split(a:output, '\n'))
 endfunction
 
