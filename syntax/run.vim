@@ -1,5 +1,4 @@
-syntax match Number /\W\zs\d\+\w\+/
-syntax match Number /^\d\+\w\+/
+syntax match Number /\d\+/
 syntax match Error /\c\w*exception\?/
 syntax match Error /\c\w*errors\?/
 syntax match Warning /\c\warnings\?/
