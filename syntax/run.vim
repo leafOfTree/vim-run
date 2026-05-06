@@ -8,9 +8,9 @@ syntax match Number /\<0[oO][0-7]\+\>/
 syntax match Number /\<0[bB][01]\+\>/
 
 " Decimal: 123, 123.1, 123-1233
-syntax match Number /\<\d\+\%(\.\d\+\)\?\%(-\d\+\)\?\>/
+syntax match Number /\<\d\+\%(\.\d\+\)\?\%(-\d\+\)\?\%([a-zA-Z]\+\)\?\>/
 
-syntax match Constant /\[[^]]*\]/
+syntax match Constant /\[[^]]*\].\S+/
 syntax match Error /\c\w*exception\?/
 syntax match Error /\c\w*errors\?/
 syntax match Warning /\c\warnings\?/
